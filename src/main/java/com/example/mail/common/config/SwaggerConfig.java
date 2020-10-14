@@ -20,7 +20,7 @@ public class SwaggerConfig {
                 .groupName("邮件管理")
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.example.mail_send.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.example.mail.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }
