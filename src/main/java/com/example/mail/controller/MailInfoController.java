@@ -1,7 +1,7 @@
 package com.example.mail.controller;
 
 import com.example.mail.model.MailInfoModel;
-import com.example.mail.model.Result;
+import com.example.mail.model.ResultModel;
 import com.example.mail.service.MailInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,14 +26,8 @@ public class MailInfoController {
      */
     @PostMapping("/sendSimpleMail")
     @ApiOperation("简单文本邮件")
-    public Result sendSimpleMail(@RequestBody MailInfoModel mailModel) {
-        try {
-            mailService.sendSimpleMail(mailModel);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return  Result.error();
-        }
-        return  Result.ok();
+    public ResultModel sendSimpleMail(@RequestBody MailInfoModel mailModel) throws Exception {
+        return mailService.sendSimpleMail(mailModel);
     }
 
     /**
@@ -43,14 +37,8 @@ public class MailInfoController {
      */
     @PostMapping("/sendInlineMail")
     @ApiOperation("带图片邮件")
-    public Result sendInlineMail(@RequestBody MailInfoModel mailModel) {
-        try {
-            mailService.sendInlineMail(mailModel);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return  Result.error();
-        }
-        return  Result.ok();
+    public ResultModel sendInlineMail(@RequestBody MailInfoModel mailModel) throws Exception {
+        return mailService.sendInlineMail(mailModel);
     }
 
     /**
@@ -60,14 +48,8 @@ public class MailInfoController {
      */
     @PostMapping("/sendAttachmentMail")
     @ApiOperation("带附件邮件")
-    public Result sendAttachmentMail(@RequestBody MailInfoModel mailModel) {
-        try {
-            mailService.sendAttachmentMail(mailModel);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return  Result.error();
-        }
-        return  Result.ok();
+    public ResultModel sendAttachmentMail(@RequestBody MailInfoModel mailModel) throws Exception {
+        return mailService.sendAttachmentMail(mailModel);
     }
 
     /**
@@ -77,13 +59,7 @@ public class MailInfoController {
      */
     @PostMapping("/sendTemplateMail")
     @ApiOperation("模板邮件")
-    public Result sendTemplateMail(@RequestBody MailInfoModel mailModel) {
-        try {
-            mailService.sendTemplateMail(mailModel);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return  Result.error();
-        }
-        return  Result.ok();
+    public ResultModel sendTemplateMail(@RequestBody MailInfoModel mailModel) throws Exception {
+        return mailService.sendTemplateMail(mailModel);
     }
 }

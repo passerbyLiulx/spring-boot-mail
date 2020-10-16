@@ -1,8 +1,9 @@
 package com.example.mail.controller;
 
 import com.example.mail.common.constants.ExceptionConstant;
+import com.example.mail.common.enums.ExceptionEnum;
 import com.example.mail.model.JobInfoModel;
-import com.example.mail.model.Result;
+import com.example.mail.model.ResultModel;
 import com.example.mail.service.JobInfoService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
@@ -23,66 +24,66 @@ public class JobInfoController {
 
     @ApiOperation("新增定时任务信息")
     @PostMapping("/addJobInfo")
-    public Result addJob(@RequestBody JobInfoModel jobInfoModel) {
+    public ResultModel addJob(@RequestBody JobInfoModel jobInfoModel) {
         String jobId = jobInfoService.saveJobInfo(jobInfoModel);
-        return (StringUtils.isEmpty(jobId)) ? Result.error(ExceptionConstant.INSERT_FAILED_ERROR) : Result.ok(jobId);
+        return (StringUtils.isEmpty(jobId)) ? ResultModel.error(ExceptionConstant.INSERT_FAILED_ERROR) : ResultModel.ok(jobId);
     }
 
     @ApiOperation("更新定时任务信息")
     @PutMapping("/updateJobInfo")
-    public Result updateJob(@RequestBody JobInfoModel jobInfoModel) {
+    public ResultModel updateJob(@RequestBody JobInfoModel jobInfoModel) {
         int updateCount = jobInfoService.updateJobInfo(jobInfoModel);
-        return (updateCount == 0) ? Result.error(ExceptionConstant.UPDATE_FAILED_ERROR) : Result.ok(updateCount);
+        return (updateCount == 0) ? ResultModel.error(ExceptionConstant.UPDATE_FAILED_ERROR) : ResultModel.ok(updateCount);
     }
 
     @ApiOperation("删除定时任务信息")
     @DeleteMapping("/deleteJobInfo/{jobId}")
-    public Result delete(@PathVariable("jobId") String jobId) {
+    public ResultModel delete(@PathVariable("jobId") String jobId) {
         int deleteCount = jobInfoService.deleteJobInfo(jobId);
-        return (deleteCount == 0) ? Result.error(ExceptionConstant.SYSTEM_BUSY_ERROR) : Result.ok(deleteCount);
+        return (deleteCount == 0) ? ResultModel.error(ExceptionConstant.SYSTEM_BUSY_ERROR) : ResultModel.ok(deleteCount);
     }
 
     @ApiOperation("查询定时任务")
     @GetMapping("/getJobInfoById/{jobId}")
-    public Result getJobById(@PathVariable("jobId") String jobId) {
+    public ResultModel getJobById(@PathVariable("jobId") String jobId) {
         JobInfoModel jobInfoModel = jobInfoService.getJobInfoById(jobId);
-        return Result.ok(jobInfoModel);
+        return ResultModel.ok(jobInfoModel);
     }
 
     @ApiOperation("查询所有定时任务信息")
     @GetMapping("/jobInfoList")
-    public Result getAllJob() {
+    public ResultModel getAllJob() {
         List<JobInfoModel> jobInfoModelList = jobInfoService.jobInfoList();
-        return Result.ok(jobInfoModelList);
+        return ResultModel.ok(jobInfoModelList);
     }
 
     @ApiOperation("分页查询定时任务信息")
     @GetMapping("/jobInfoListByPage/{pageNum}/{pageSize}")
-    public Result getAllJobPage(@PathVariable("pageNum") int pageNum,
+    public ResultModel getAllJobPage(@PathVariable("pageNum") int pageNum,
             @PathVariable("pageSize") int pageSize) {
         PageInfo<JobInfoModel> pageInfo = jobInfoService.jobInfoListByPage(pageNum, pageSize);
-        return Result.ok(pageInfo);
+        return ResultModel.ok(pageInfo);
     }
 
     @ApiOperation("条件分页查询定时任务信息")
     @PostMapping("/jobInfoListByPageCondition")
-    public Result jobInfoListByPageCondition(@RequestBody(required = false) JobInfoModel jobInfoModel) {
+    public ResultModel jobInfoListByPageCondition(@RequestBody(required = false) JobInfoModel jobInfoModel) {
         PageInfo<JobInfoModel> pageInfo = jobInfoService.jobInfoListByPageCondition(jobInfoModel);
-        return Result.ok(pageInfo);
+        return ResultModel.ok(pageInfo);
     }
 
     @ApiOperation("改变定时任务状态")
     @GetMapping("/changeTaskStatus/{jobId}/{openState}")
-    public Result changeTaskStatus(@PathVariable("jobId") String jobId, @PathVariable("openState") int openState) {
+    public ResultModel changeTaskStatus(@PathVariable("jobId") String jobId, @PathVariable("openState") int openState) {
         int update = jobInfoService.changeTaskStatus(jobId, openState);
-        return (update == 0) ? Result.error(ExceptionConstant.UPDATE_FAILED_ERROR) : Result.ok(update);
+        return (update == 0) ? ResultModel.error(ExceptionConstant.UPDATE_FAILED_ERROR) : ResultModel.ok(update);
     }
 
     @ApiOperation("ID标识是否重复")
     @GetMapping("/isRepeatById/{jobId}")
-    public Result isRepeatById(@PathVariable("jobId") String jobId) {
+    public ResultModel isRepeatById(@PathVariable("jobId") String jobId) {
         int infoCount = jobInfoService.countJobInfoById(jobId);
-        return Result.ok(infoCount);
+        return ResultModel.ok(infoCount);
     }
 
 }
