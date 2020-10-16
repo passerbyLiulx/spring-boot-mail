@@ -1,7 +1,9 @@
 package com.example.mail.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.mail.model.MailInfoModel;
 import com.example.mail.model.ResultModel;
+import io.netty.handler.codec.json.JsonObjectDecoder;
 
 public interface MailInfoService {
 
@@ -27,6 +29,6 @@ public interface MailInfoService {
      * 带模板邮件
      * @param mailModel
      */
-    public ResultModel sendTemplateMail(MailInfoModel mailModel) throws Exception;
+    public JSONObject sendTemplateMail(MailInfoModel mailModel) throws Exception;
 
 }

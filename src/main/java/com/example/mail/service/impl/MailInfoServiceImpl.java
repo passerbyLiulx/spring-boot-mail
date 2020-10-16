@@ -240,12 +240,13 @@ public class MailInfoServiceImpl implements MailInfoService {
      * @param mailModel
      */
     @Override
-    public ResultModel sendTemplateMail(MailInfoModel mailModel) throws Exception {
+    public JSONObject sendTemplateMail(MailInfoModel mailModel) throws Exception {
+        JSONObject jsonObject = new JSONObject();
         // 校验基本邮件信息
         ResultModel resultModel = checkBaseMailInfo(mailModel);
-        if ((int)resultModel.get("code") != ExceptionEnum.SUCCESS.getCode()) {
+        /*if ((int)resultModel.get("code") != ExceptionEnum.SUCCESS.getCode()) {
             return resultModel;
-        }
+        }*/
         /*if (!resultModel.containsValue(ExceptionEnum.SUCCESS.getCode())) {
             return resultModel;
         }*/
@@ -305,9 +306,15 @@ public class MailInfoServiceImpl implements MailInfoService {
                 saveMailInfo(mailModel, MailTypeConstant.MAIL_TYPE_TEMPLATE);
             }
             logger.error("发送邮件失败", e);
-            return ResultModel.error();
+            jsonObject.put("code", 500);
+            jsonObject.put("msg", "系统异常");
+            jsonObject.put("data", "");
+            return jsonObject;
         }
-        return ResultModel.ok();
+        jsonObject.put("code", 200);
+        jsonObject.put("msg", "成功");
+        jsonObject.put("data", "");
+        return jsonObject;
     }
 
     /**

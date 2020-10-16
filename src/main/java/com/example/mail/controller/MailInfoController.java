@@ -1,15 +1,14 @@
 package com.example.mail.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.mail.model.MailInfoModel;
 import com.example.mail.model.ResultModel;
 import com.example.mail.service.MailInfoService;
+import io.netty.handler.codec.json.JsonObjectDecoder;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/mailController")
@@ -26,6 +25,7 @@ public class MailInfoController {
      */
     @PostMapping("/sendSimpleMail")
     @ApiOperation("简单文本邮件")
+    @ResponseBody
     public ResultModel sendSimpleMail(@RequestBody MailInfoModel mailModel) throws Exception {
         return mailService.sendSimpleMail(mailModel);
     }
@@ -37,6 +37,7 @@ public class MailInfoController {
      */
     @PostMapping("/sendInlineMail")
     @ApiOperation("带图片邮件")
+    @ResponseBody
     public ResultModel sendInlineMail(@RequestBody MailInfoModel mailModel) throws Exception {
         return mailService.sendInlineMail(mailModel);
     }
@@ -48,6 +49,7 @@ public class MailInfoController {
      */
     @PostMapping("/sendAttachmentMail")
     @ApiOperation("带附件邮件")
+    @ResponseBody
     public ResultModel sendAttachmentMail(@RequestBody MailInfoModel mailModel) throws Exception {
         return mailService.sendAttachmentMail(mailModel);
     }
@@ -59,7 +61,9 @@ public class MailInfoController {
      */
     @PostMapping("/sendTemplateMail")
     @ApiOperation("模板邮件")
-    public ResultModel sendTemplateMail(@RequestBody MailInfoModel mailModel) throws Exception {
+    public JSONObject sendTemplateMail(@RequestBody MailInfoModel mailModel) throws Exception {
         return mailService.sendTemplateMail(mailModel);
     }
+
+
 }
