@@ -344,43 +344,43 @@ public class MailInfoServiceImpl implements MailInfoService {
      *
      * @param mailModel
      */
-    public void saveMailInfo(MailInfoModel mailModel, Integer mailType) throws Exception {
+    public ResultModel saveMailInfo(MailInfoModel mailModel, Integer mailType) throws Exception {
         String uuid = UUID.randomUUID().toString().replaceAll("-", "");
-        MailInfoDao mailDao = new MailInfoDao();
-        mailDao.setMailId(uuid);
-        mailDao.setMailFrom(from);
-        mailDao.setMailTo(StringUtils.join(mailModel.getToArr(), ","));
+        MailInfoDao mailInfoDao = new MailInfoDao();
+        mailInfoDao.setMailId(uuid);
+        mailInfoDao.setMailFrom(from);
+        mailInfoDao.setMailTo(StringUtils.join(mailModel.getToArr(), ","));
         if (mailModel.getCcArr() != null) {
-            mailDao.setMailCc(StringUtils.join(mailModel.getCcArr(), ","));
+            mailInfoDao.setMailCc(StringUtils.join(mailModel.getCcArr(), ","));
         }
         if (mailModel.getBccArr() != null) {
-            mailDao.setMailBcc(StringUtils.join(mailModel.getBccArr(), ","));
+            mailInfoDao.setMailBcc(StringUtils.join(mailModel.getBccArr(), ","));
         }
-        mailDao.setSubject(mailModel.getSubject());
-        mailDao.setContent(mailModel.getContent());
+        mailInfoDao.setSubject(mailModel.getSubject());
+        mailInfoDao.setContent(mailModel.getContent());
         if (mailModel.getPictureMap() != null) {
             String pictureJson = JSONObject.toJSONString(mailModel.getPictureMap());
-            mailDao.setPictureJson(pictureJson);
+            mailInfoDao.setPictureJson(pictureJson);
         }
         if (mailModel.getAttachmentPathArr() != null) {
-            mailDao.setAttachmentPath(StringUtils.join(mailModel.getAttachmentPathArr(), "|"));
+            mailInfoDao.setAttachmentPath(StringUtils.join(mailModel.getAttachmentPathArr(), "|"));
         }
-        mailDao.setTemplateName(mailModel.getTemplateName());
+        mailInfoDao.setTemplateName(mailModel.getTemplateName());
         if (mailModel.getTemplateMap() != null) {
             String templateJson = JSONObject.toJSONString(mailModel.getTemplateMap());
-            mailDao.setTemplateJson(templateJson);
+            mailInfoDao.setTemplateJson(templateJson);
         }
-        mailDao.setSendDate(new Date());
-        mailDao.setMailType(mailType);
-        mailDao.setSendState(mailModel.getSendState());
-        mailDao.setDeleteState(MailDeleteStateConstant.MAIL_INFO_NOT_DELETED);
-        mailInfoMapper.addMailInfo(mailDao);
+        mailInfoDao.setSendDate(new Date());
+        mailInfoDao.setMailType(mailType);
+        mailInfoDao.setSendState(mailModel.getSendState());
+        mailInfoDao.setDeleteState(MailDeleteStateConstant.MAIL_INFO_NOT_DELETED);
+        mailInfoMapper.addMailInfo(mailInfoDao);
 
-        /*int count = mailInfoMapper.addMailInfo(mailDao);
+        int count = mailInfoMapper.addMailInfo(mailInfoDao);
         if (count != 1) {
-            throw new Exception("保存邮件信息失败");
+            return ResultModel.error(ExceptionEnum.EMAIL_SAVE_FAIL_EXCEPTION.getMessage());
         }
-        logger.info("保存邮件信息成功");*/
+        return ResultModel.ok(mailInfoDao.getMailId());
     }
 
     /**
@@ -389,16 +389,16 @@ public class MailInfoServiceImpl implements MailInfoService {
      * @param mailModel
      * @throws Exception
      */
-    public void updateMailInfo(MailInfoModel mailModel) throws Exception {
+    public ResultModel updateMailInfo(MailInfoModel mailModel) throws Exception {
         MailInfoDao mailInfoDao = mailInfoMapper.getMailInfoByMailId(mailModel.getMailId());
         mailInfoDao.setSendState(mailModel.getSendState());
         mailInfoDao.setSendDate(new Date());
         mailInfoMapper.updateMailInfo(mailInfoDao);
 
-        /*int count = mailInfoMapper.updateMailInfo(mailInfoDao);
+        int count = mailInfoMapper.updateMailInfo(mailInfoDao);
         if (count != 1) {
-            throw new Exception("修改邮件信息失败");
+            return ResultModel.error(ExceptionEnum.EMAIL_UPDATE_FAIL_EXCEPTION.getMessage());
         }
-        logger.info("修改邮件信息成功");*/
+        return ResultModel.ok(mailInfoDao.getMailId());
     }
 }
