@@ -76,16 +76,8 @@ public class MailInfoServiceImpl implements MailInfoService {
             simpleMailMessage.setSentDate(new Date());
             mailSender.send(simpleMailMessage);
             logger.info("发送邮件成功");
-            mailModel.setSendState(MailSendStateConstant.MAIL_SEND_SUCCESS);
-            if (StringUtil.isNullOrEmpty(mailModel.getMailId())) {
-                // 保存邮件信息
-                saveMailInfo(mailModel,  MailTypeConstant.MAIL_TYPE_SIMPLE);
-            } else {
-                // 修改邮件信息
-                updateMailInfo(mailModel);
-            }
         } catch (Exception e) {
-            if (mailModel.getRetryNumber() < 3) {
+            if (mailModel.getRetryNumber() < 2) {
                 mailModel.setRetryNumber(mailModel.getRetryNumber() + 1);
                 return sendSimpleMail(mailModel);
             }
@@ -95,9 +87,16 @@ public class MailInfoServiceImpl implements MailInfoService {
                 saveMailInfo(mailModel, MailTypeConstant.MAIL_TYPE_SIMPLE);
             }
             logger.error("发送邮件失败", e);
-            return ResultModel.error();
+            return ResultModel.error(ExceptionEnum.EMAIL_SEND_FAIL.getMessage());
         }
-        return ResultModel.ok();
+        mailModel.setSendState(MailSendStateConstant.MAIL_SEND_SUCCESS);
+        if (StringUtil.isNullOrEmpty(mailModel.getMailId())) {
+            // 保存邮件信息
+            return saveMailInfo(mailModel, MailTypeConstant.MAIL_TYPE_SIMPLE);
+        } else {
+            // 修改邮件信息
+            return updateMailInfo(mailModel);
+        }
     }
 
     /**
@@ -138,16 +137,8 @@ public class MailInfoServiceImpl implements MailInfoService {
             mimeMessageHelper.setSentDate(new Date());
             mailSender.send(mimeMessage);
             logger.info("发送邮件成功");
-            mailModel.setSendState(MailSendStateConstant.MAIL_SEND_SUCCESS);
-            if (StringUtil.isNullOrEmpty(mailModel.getMailId())) {
-                // 保存邮件信息
-                saveMailInfo(mailModel, MailTypeConstant.MAIL_TYPE_INLINE);
-            } else {
-                // 修改邮件信息
-                updateMailInfo(mailModel);
-            }
         } catch (Exception e) {
-            if (mailModel.getRetryNumber() < 3) {
+            if (mailModel.getRetryNumber() < 2) {
                 mailModel.setRetryNumber(mailModel.getRetryNumber() + 1);
                 return sendInlineMail(mailModel);
             }
@@ -157,9 +148,16 @@ public class MailInfoServiceImpl implements MailInfoService {
                  saveMailInfo(mailModel, MailTypeConstant.MAIL_TYPE_INLINE);
             }
             logger.error("发送邮件失败", e);
-            return ResultModel.error();
+            return ResultModel.error(ExceptionEnum.EMAIL_SEND_FAIL.getMessage());
         }
-        return ResultModel.ok();
+        mailModel.setSendState(MailSendStateConstant.MAIL_SEND_SUCCESS);
+        if (StringUtil.isNullOrEmpty(mailModel.getMailId())) {
+            // 保存邮件信息
+            return saveMailInfo(mailModel, MailTypeConstant.MAIL_TYPE_INLINE);
+        } else {
+            // 修改邮件信息
+            return updateMailInfo(mailModel);
+        }
 
     }
 
@@ -210,16 +208,8 @@ public class MailInfoServiceImpl implements MailInfoService {
             mimeMessageHelper.setSentDate(new Date());
             mailSender.send(mimeMessage);
             logger.info("发送邮件成功");
-            mailModel.setSendState(MailSendStateConstant.MAIL_SEND_SUCCESS);
-            if (StringUtil.isNullOrEmpty(mailModel.getMailId())) {
-                // 保存邮件信息
-                saveMailInfo(mailModel, MailTypeConstant.MAIL_TYPE_ATTACHMENT);
-            } else {
-                // 修改邮件信息
-                updateMailInfo(mailModel);
-            }
         } catch (Exception e) {
-            if (mailModel.getRetryNumber() < 3) {
+            if (mailModel.getRetryNumber() < 2) {
                 mailModel.setRetryNumber(mailModel.getRetryNumber() + 1);
                 return sendAttachmentMail(mailModel);
             }
@@ -229,9 +219,16 @@ public class MailInfoServiceImpl implements MailInfoService {
                 saveMailInfo(mailModel, MailTypeConstant.MAIL_TYPE_ATTACHMENT);
             }
             logger.error("发送邮件失败", e);
-            return ResultModel.error();
+            return ResultModel.error(ExceptionEnum.EMAIL_SEND_FAIL.getMessage());
         }
-        return ResultModel.ok();
+        mailModel.setSendState(MailSendStateConstant.MAIL_SEND_SUCCESS);
+        if (StringUtil.isNullOrEmpty(mailModel.getMailId())) {
+            // 保存邮件信息
+            return saveMailInfo(mailModel, MailTypeConstant.MAIL_TYPE_ATTACHMENT);
+        } else {
+            // 修改邮件信息
+            return updateMailInfo(mailModel);
+        }
     }
 
     /**
@@ -296,7 +293,7 @@ public class MailInfoServiceImpl implements MailInfoService {
                 updateMailInfo(mailModel);
             }
         } catch (Exception e) {
-            if (mailModel.getRetryNumber() < 3) {
+            if (mailModel.getRetryNumber() < 2) {
                 mailModel.setRetryNumber(mailModel.getRetryNumber() + 1);
                 return sendTemplateMail(mailModel);
             }
@@ -307,7 +304,7 @@ public class MailInfoServiceImpl implements MailInfoService {
             }
             logger.error("发送邮件失败", e);
             jsonObject.put("code", 500);
-            jsonObject.put("msg", "系统异常");
+            jsonObject.put("msg", "系统异常，请稍后重试");
             jsonObject.put("data", "");
             return jsonObject;
         }
@@ -374,8 +371,6 @@ public class MailInfoServiceImpl implements MailInfoService {
         mailInfoDao.setMailType(mailType);
         mailInfoDao.setSendState(mailModel.getSendState());
         mailInfoDao.setDeleteState(MailDeleteStateConstant.MAIL_INFO_NOT_DELETED);
-        mailInfoMapper.addMailInfo(mailInfoDao);
-
         int count = mailInfoMapper.addMailInfo(mailInfoDao);
         if (count != 1) {
             return ResultModel.error(ExceptionEnum.EMAIL_SAVE_FAIL_EXCEPTION.getMessage());
@@ -393,8 +388,6 @@ public class MailInfoServiceImpl implements MailInfoService {
         MailInfoDao mailInfoDao = mailInfoMapper.getMailInfoByMailId(mailModel.getMailId());
         mailInfoDao.setSendState(mailModel.getSendState());
         mailInfoDao.setSendDate(new Date());
-        mailInfoMapper.updateMailInfo(mailInfoDao);
-
         int count = mailInfoMapper.updateMailInfo(mailInfoDao);
         if (count != 1) {
             return ResultModel.error(ExceptionEnum.EMAIL_UPDATE_FAIL_EXCEPTION.getMessage());
