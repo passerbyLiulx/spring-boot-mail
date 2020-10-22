@@ -31,4 +31,10 @@ public interface MailInfoService {
      */
     public JSONObject sendTemplateMail(MailInfoModel mailModel) throws Exception;
 
+
+    /**
+     * 带模板邮件
+     * @param mailModel
+     */
+    public JSONObject sendTemplateAttrMail(MailInfoModel mailModel) throws Exception;
 }

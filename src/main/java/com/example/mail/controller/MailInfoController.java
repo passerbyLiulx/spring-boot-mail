@@ -20,49 +20,49 @@ public class MailInfoController {
 
     /**
      * 简单文本邮件
-     * @param mailModel
+     * @param mailInfoModel
      * @return
      */
     @PostMapping("/sendSimpleMail")
     @ApiOperation("简单文本邮件")
     @ResponseBody
-    public ResultModel sendSimpleMail(@RequestBody MailInfoModel mailModel) throws Exception {
-        return mailService.sendSimpleMail(mailModel);
+    public ResultModel sendSimpleMail(@RequestBody MailInfoModel mailInfoModel) throws Exception {
+        return mailService.sendSimpleMail(mailInfoModel);
     }
 
     /**
      * 带图片邮件
-     * @param mailModel
+     * @param mailInfoModel
      * @return
      */
     @PostMapping("/sendInlineMail")
     @ApiOperation("带图片邮件")
     @ResponseBody
-    public ResultModel sendInlineMail(@RequestBody MailInfoModel mailModel) throws Exception {
-        return mailService.sendInlineMail(mailModel);
+    public ResultModel sendInlineMail(@RequestBody MailInfoModel mailInfoModel) throws Exception {
+        return mailService.sendInlineMail(mailInfoModel);
     }
 
     /**
      * 带附件邮件
-     * @param mailModel
+     * @param mailInfoModel
      * @return
      */
     @PostMapping("/sendAttachmentMail")
     @ApiOperation("带附件邮件")
     @ResponseBody
-    public ResultModel sendAttachmentMail(@RequestBody MailInfoModel mailModel) throws Exception {
-        return mailService.sendAttachmentMail(mailModel);
+    public ResultModel sendAttachmentMail(@RequestBody MailInfoModel mailInfoModel) throws Exception {
+        return mailService.sendAttachmentMail(mailInfoModel);
     }
 
     /**
      * 模板邮件
-     * @param mailModel
+     * @param mailInfoModel
      * @return
      */
     @PostMapping("/sendTemplateMail")
     @ApiOperation("模板邮件")
-    public JSONObject sendTemplateMail(@RequestBody MailInfoModel mailModel) throws Exception {
-        return mailService.sendTemplateMail(mailModel);
+    public JSONObject sendTemplateMail(@RequestBody MailInfoModel mailInfoModel) throws Exception {
+        return mailService.sendTemplateMail(mailInfoModel);
     }
 
 

@@ -1,11 +1,16 @@
 package com.example.mail;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.example.mail.controller.MailInfoController;
 import com.example.mail.model.MailInfoModel;
 import com.example.mail.service.MailInfoService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.util.ResourceUtils;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +18,10 @@ import java.util.Map;
 class MailApplicationTest {
 
     @Autowired
-    private MailInfoService mailService;
+    private MailInfoController mailInfoController;
+
+    @Autowired
+    private MailInfoService mailInfoService;
 
     /**
      * 简单文本邮件
@@ -25,7 +33,7 @@ class MailApplicationTest {
         String subject = "SpringBootMail实现邮件发送";
         String content = "SpringBootMail实现邮件发送正文";
         MailInfoModel mailModel = new MailInfoModel(toArr, null, null, subject, content);
-        mailService.sendSimpleMail(mailModel);
+        mailInfoService.sendSimpleMail(mailModel);
     }
 
     /**
@@ -41,7 +49,7 @@ class MailApplicationTest {
         pictureMap.put("ceshi1", "D:\\项目测试\\测试1.png");
         pictureMap.put("ceshi2", "D:\\项目测试\\测试2.png");
         mailModel.setPictureMap(pictureMap);
-        mailService.sendInlineMail(mailModel);
+        mailInfoService.sendInlineMail(mailModel);
     }
 
     /**
@@ -63,7 +71,7 @@ class MailApplicationTest {
         mailModel.setAttachmentPathArr(new String[]{"D:\\项目测试\\泰照护机构运营管理平台使用申请书.pdf", "D:\\项目测试\\测试2.txt"});
         // 取消切割，默认是true
         System.setProperty("mail.mime.splitlongparameters", "false");
-        mailService.sendAttachmentMail(mailModel);
+        mailInfoService.sendAttachmentMail(mailModel);
     }
 
     /**
@@ -84,6 +92,40 @@ class MailApplicationTest {
         mailModel.setAttachmentPathArr(new String[]{"D:\\项目测试\\泰照护机构运营管理平台使用申请书.pdf", "D:\\项目测试\\测试2.txt"});
         // 取消切割，默认是true
         System.setProperty("mail.mime.splitlongparameters", "false");
-        mailService.sendTemplateMail(mailModel);
+        mailInfoService.sendTemplateMail(mailModel);
+    }
+
+    @Test
+    public void sendTemplateMailJsonObjectTest() throws Exception {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("subject", "测试");
+        jsonObject.put("conteng", "测试");
+        JSONArray toArrJsonArray = new JSONArray();
+        toArrJsonArray.add("1234");
+        toArrJsonArray.add("5678");
+        jsonObject.put("toArr", toArrJsonArray);
+        jsonObject.put("templateName", "mailTemplate");
+        JSONObject templateMapJsonObject = new JSONObject();
+        templateMapJsonObject.put("title", "邮件测试");
+        templateMapJsonObject.put("content", "邮件测试");
+        jsonObject.put("templateMap", templateMapJsonObject);
+        //mailInfoController.sendTemplateMail(jsonObject);
+    }
+
+    @Test
+    public void sendTemplateMailFilesTest() throws Exception {
+        String[] toArr = new String[]{"1191026928@qq.com"};
+        String subject = "SpringBootMail实现邮件发送";
+        String content = "SpringBootMail实现邮件发送正文";
+        MailInfoModel mailModel = new MailInfoModel(toArr, null, null, subject, content);
+        mailModel.setTemplateName("mailTemplate");
+        Map<String, Object> templateMap = new HashMap<>();
+        templateMap.put("title", "邮件测试");
+        templateMap.put("content", "邮件测试成功了,/;;\",,,\";");
+        mailModel.setTemplateMap(templateMap);
+        //mailModel.setTemplateName("registerMailTemplate");
+        // 取消切割，默认是true
+        System.setProperty("mail.mime.splitlongparameters", "false");
+        mailInfoService.sendTemplateAttrMail(mailModel);
     }
 }
