@@ -14,6 +14,7 @@ spring:
     # QQ
     host: smtp.qq.com
     username: 1191026928@qq.com
+    nickname: 刘立新
     # 密码是QQ邮箱开启SMTP的授权码
     password: ymcissolfvjjgjia
     default-encoding: utf-8

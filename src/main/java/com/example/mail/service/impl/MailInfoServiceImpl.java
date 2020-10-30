@@ -52,6 +52,9 @@ public class MailInfoServiceImpl implements MailInfoService {
     @Value("${spring.mail.username}")
     public String from;
 
+    @Value("${spring.mail.nickname}")
+    public String nickName;
+
     /**
      * 简单文本邮件
      *
@@ -67,7 +70,8 @@ public class MailInfoServiceImpl implements MailInfoService {
         try {
             // 简单邮件消息对象
             SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-            simpleMailMessage.setFrom(from);
+            String fromByte = new String((nickName + "<" + from + ">").getBytes("UTF-8"));
+            simpleMailMessage.setFrom(fromByte);
             // setTo 接收人，setCc 抄送人，setBCc密送人
             simpleMailMessage.setTo(mailModel.getToArr());
             if (mailModel.getCcArr() != null) {
@@ -334,7 +338,9 @@ public class MailInfoServiceImpl implements MailInfoService {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         try {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true, "utf-8");
-            mimeMessageHelper.setFrom(from);
+            String fromByte = new String((nickName + "<" + from + ">").getBytes("UTF-8"));
+            mimeMessageHelper.setFrom(fromByte);
+            //mimeMessageHelper.setFrom(from, nickName);
             // setTo 接收人，setCc 抄送人，setBCc密送人
             if (mailModel.getToArr() != null) {
                 mimeMessageHelper.setTo(mailModel.getToArr());
