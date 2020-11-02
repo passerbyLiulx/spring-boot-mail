@@ -14,7 +14,7 @@ spring:
     # QQ
     host: smtp.qq.com
     # 用户名
-    username: 1191026928@qq.com
+    username:
     # 昵称
     nickname: 测试
     # 密码是QQ邮箱开启SMTP的授权码
