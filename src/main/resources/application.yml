@@ -13,12 +13,17 @@ spring:
     # host: smtp.163.com
     # QQ
     host: smtp.qq.com
+    # 用户名
     username: 1191026928@qq.com
-    nickname: 刘立新
+    # 昵称
+    nickname: 测试
     # 密码是QQ邮箱开启SMTP的授权码
-    password: ymcissolfvjjgjia
+    password:
+    # 默认编码格式
     default-encoding: utf-8
+    # 协议
     protocol: smtp
+    # 端口号
     port: 25
     properties:
       mail:
