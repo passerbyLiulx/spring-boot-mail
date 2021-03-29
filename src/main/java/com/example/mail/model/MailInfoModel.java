@@ -9,7 +9,7 @@ import java.util.Map;
 @Data
 public class MailInfoModel {
 
-    @ApiModelProperty(value = "发送人")
+    @ApiModelProperty(value = "邮件Id")
     private String mailId;
 
     @ApiModelProperty(value = "发送人")
