@@ -4,10 +4,10 @@ import com.example.mail.common.constants.ExceptionConstant;
 import com.example.mail.common.enums.ExceptionEnum;
 import com.example.mail.model.JobInfoModel;
 import com.example.mail.model.ResultModel;
+import com.example.mail.model.ResultModelTest;
 import com.example.mail.service.JobInfoService;
 import com.github.pagehelper.PageInfo;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -86,4 +86,31 @@ public class JobInfoController {
         return ResultModel.ok(infoCount);
     }
 
+    @ApiOperation("测试demo1")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "paramOne", value = "参数1", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "paramTwo", value = "参数2", required = true, dataType = "String", paramType = "query")
+    })
+    @ApiResponse(code = 200, message = "成功", response = ResultModelTest.class)
+    @GetMapping("/testOne")
+    public ResultModelTest<JobInfoModel> testOne(@RequestParam("paramOne") String paramOne, @RequestParam("paramTwo") String paramTwo) {
+        JobInfoModel jobInfoModel = new JobInfoModel();
+        jobInfoModel.setJobId("111");
+        jobInfoModel.setTaskName("testOne");
+        return new ResultModelTest<>(200, "成功", jobInfoModel);
+    }
+
+    @ApiOperation("测试demo2")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "paramOne", value = "参数1", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "paramTwo", value = "参数2", required = true, dataType = "String", paramType = "query")
+    })
+    @ApiResponse(code = 200, message = "成功", response = ResultModelTest.class)
+    @GetMapping("/testOne")
+    public ResultModelTest<JobInfoModel> testTwo(@RequestParam("paramOne") String paramOne, @RequestParam("paramTwo") String paramTwo) {
+        JobInfoModel jobInfoModel = new JobInfoModel();
+        jobInfoModel.setJobId("111");
+        jobInfoModel.setTaskName("testOne");
+        return new ResultModelTest<>(200, "成功", jobInfoModel);
+    }
 }
