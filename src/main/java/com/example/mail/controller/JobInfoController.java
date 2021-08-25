@@ -106,7 +106,7 @@ public class JobInfoController {
             @ApiImplicitParam(name = "paramTwo", value = "参数2", required = true, dataType = "String", paramType = "query")
     })
     @ApiResponse(code = 200, message = "成功", response = ResultModelTest.class)
-    @GetMapping("/testOne")
+    @GetMapping("/testTwo")
     public ResultModelTest<JobInfoModel> testTwo(@RequestParam("paramOne") String paramOne, @RequestParam("paramTwo") String paramTwo) {
         JobInfoModel jobInfoModel = new JobInfoModel();
         jobInfoModel.setJobId("111");
