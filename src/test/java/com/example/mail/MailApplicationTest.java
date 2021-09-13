@@ -28,12 +28,12 @@ class MailApplicationTest {
      */
     @Test
     public void sendSimpleMailTest() throws Exception {
-        String[] toArr = new String[]{"1191026928@qq.com"};
+        /*String[] toArr = new String[]{"1191026928@qq.com"};
         //String[] ccArr = new String[]{"1099020655@qq.com","1370916560@qq.com"};
         String subject = "SpringBootMail实现邮件发送";
         String content = "SpringBootMail实现邮件发送正文";
         MailInfoModel mailModel = new MailInfoModel(toArr, null, null, subject, content);
-        mailInfoService.sendSimpleMail(mailModel);
+        mailInfoService.sendSimpleMail(mailModel);*/
     }
 
     /**
@@ -41,7 +41,7 @@ class MailApplicationTest {
      */
     @Test
     public void sendInlineMailTest() throws Exception {
-        String[] toArr = new String[]{"1191026928@qq.com"};
+        /*String[] toArr = new String[]{"1191026928@qq.com"};
         String subject = "SpringBootMail实现邮件发送";
         String content = "<html><body><img src='cid:ceshi1'><img src='cid:ceshi2'>SpringBootMail实现邮件发送正文</body></html>";
         MailInfoModel mailModel = new MailInfoModel(toArr, null, null, subject, content);
@@ -49,7 +49,7 @@ class MailApplicationTest {
         pictureMap.put("ceshi1", "D:\\项目测试\\测试1.png");
         pictureMap.put("ceshi2", "D:\\项目测试\\测试2.png");
         mailModel.setPictureMap(pictureMap);
-        mailInfoService.sendInlineMail(mailModel);
+        mailInfoService.sendInlineMail(mailModel);*/
     }
 
     /**
@@ -57,7 +57,7 @@ class MailApplicationTest {
      */
     @Test
     public void sendAttachmentMailTest() throws Exception {
-        String[] toArr = new String[]{"llx1191026928@163.com"};
+        /*String[] toArr = new String[]{"llx1191026928@163.com"};
         //String subject = "SpringBootMail实现邮件发送";
         String subject = "泰照护机构运营管理平台使用申请书";
         //String content = "SpringBootMail实现邮件发送正文";
@@ -71,7 +71,7 @@ class MailApplicationTest {
         mailModel.setAttachmentPathArr(new String[]{"D:\\项目测试\\泰照护机构运营管理平台使用申请书.pdf", "D:\\项目测试\\测试2.txt"});
         // 取消切割，默认是true
         System.setProperty("mail.mime.splitlongparameters", "false");
-        mailInfoService.sendAttachmentMail(mailModel);
+        mailInfoService.sendAttachmentMail(mailModel);*/
     }
 
     /**
@@ -79,7 +79,7 @@ class MailApplicationTest {
      */
     @Test
     public void sendTemplateMailTest() throws Exception {
-        String[] toArr = new String[]{"1191026928@qq.com"};
+        /*String[] toArr = new String[]{"1191026928@qq.com"};
         String subject = "SpringBootMail实现邮件发送";
         String content = "SpringBootMail实现邮件发送正文";
         MailInfoModel mailModel = new MailInfoModel(toArr, null, null, subject, content);
@@ -92,12 +92,12 @@ class MailApplicationTest {
         mailModel.setAttachmentPathArr(new String[]{"D:\\项目测试\\泰照护机构运营管理平台使用申请书.pdf", "D:\\项目测试\\测试2.txt"});
         // 取消切割，默认是true
         System.setProperty("mail.mime.splitlongparameters", "false");
-        mailInfoService.sendTemplateMail(mailModel);
+        mailInfoService.sendTemplateMail(mailModel);*/
     }
 
     @Test
     public void sendTemplateMailJsonObjectTest() throws Exception {
-        JSONObject jsonObject = new JSONObject();
+        /*JSONObject jsonObject = new JSONObject();
         jsonObject.put("subject", "测试");
         jsonObject.put("conteng", "测试");
         JSONArray toArrJsonArray = new JSONArray();
@@ -109,12 +109,12 @@ class MailApplicationTest {
         templateMapJsonObject.put("title", "邮件测试");
         templateMapJsonObject.put("content", "邮件测试");
         jsonObject.put("templateMap", templateMapJsonObject);
-        //mailInfoController.sendTemplateMail(jsonObject);
+        //mailInfoController.sendTemplateMail(jsonObject);*/
     }
 
     @Test
     public void sendTemplateMailFilesTest() throws Exception {
-        String[] toArr = new String[]{"1191026928@qq.com"};
+        /*String[] toArr = new String[]{"1191026928@qq.com"};
         String subject = "SpringBootMail实现邮件发送";
         String content = "SpringBootMail实现邮件发送正文";
         MailInfoModel mailModel = new MailInfoModel(toArr, null, null, subject, content);
@@ -126,6 +126,6 @@ class MailApplicationTest {
         //mailModel.setTemplateName("registerMailTemplate");
         // 取消切割，默认是true
         System.setProperty("mail.mime.splitlongparameters", "false");
-        mailInfoService.sendTemplateAttrMail(mailModel);
+        mailInfoService.sendTemplateAttrMail(mailModel);*/
     }
 }

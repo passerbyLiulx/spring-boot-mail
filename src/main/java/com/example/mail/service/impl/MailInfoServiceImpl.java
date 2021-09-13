@@ -393,14 +393,14 @@ public class MailInfoServiceImpl implements MailInfoService {
             //mimeMessageHelper.addAttachment("cesi.pdf", new ByteArrayResource(IOUtils.toByteArray(inputStream)));
 
             // 第二种 inputStream转换为ByteArrayOutputStream
-            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(File.separator + "files" + File.separator + "泰照护机构运营管理平台.pdf");
+            /*InputStream inputStream = getClass().getClassLoader().getResourceAsStream(File.separator + "files" + File.separator + "泰照护机构运营管理平台.pdf");
             ByteArrayOutputStream output = new ByteArrayOutputStream();
             byte[] buffer = new byte[1024*4];
             int n = 0;
             while (-1 != (n = inputStream.read(buffer))) {
                 output.write(buffer, 0, n);
             }
-            mimeMessageHelper.addAttachment("泰照护机构运营管理平台.pdf", new ByteArrayResource(output.toByteArray()));
+            mimeMessageHelper.addAttachment("泰照护机构运营管理平台.pdf", new ByteArrayResource(output.toByteArray()));*/
 
             mimeMessageHelper.setSentDate(new Date());
             mailSender.send(mimeMessage);

@@ -1,12 +1,17 @@
 server:
-  port: 8081
+  port: 8083
 
 spring:
   # 数据库
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/mail?characterEncoding=utf-8&serverTimezone=GMT%2B8
-    username: root
-    password: 123456
+    # java -cp jasypt-1.9.2.jar org.jasypt.intf.cli.JasyptPBEStringEncryptionCLI input="root" password=salt algorithm=PBEWithMD5AndDES
+    # username: root
+    username: ENC(kCrVeq8KkcXLHW/bhF/FSw==)
+    # java -cp jasypt-1.9.2.jar org.jasypt.intf.cli.JasyptPBEStringEncryptionCLI input="root" password=salt algorithm=PBEWithMD5AndDES
+    # password: root
+    password: ENC(3KpiVCBiVKGfzIaKG+aMHQ==)
+    # 启动的环境变量  -Djasypt.encryptor.password=salt
     driver-class-name: com.mysql.cj.jdbc.Driver
   mail:
     # 163
@@ -14,11 +19,11 @@ spring:
     # QQ
     host: smtp.qq.com
     # 用户名
-    username:
+    username: 1191026928@qq.com
     # 昵称
     nickname: 测试
     # 密码是QQ邮箱开启SMTP的授权码
-    password:
+    password: huvqsymqyorqjdce
     # 默认编码格式
     default-encoding: utf-8
     # 协议
@@ -41,7 +46,6 @@ spring:
           timeout: 5000
           # 邮件发送时间限制
           writetimeout: 5000
-
   #thymeleaf模板配置
   thymeleaf:
     # 存放模板的文件夹，以resource文件夹为相对路径
@@ -79,5 +83,10 @@ pagehelper:
   params: count=countSql
   reasonable: false
   supportMethodsArguments: true
+
+jasypt:
+  encryptor:
+    password: salt
+    algorithm: PBEWithMD5AndDES
 
 

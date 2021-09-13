@@ -47,7 +47,7 @@ public class MailInfoJob implements Job {
             }
             try {
                 // 使用 switch case
-                switch (mailInfoDao.getMailType()) {
+                /*switch (mailInfoDao.getMailType()) {
                     case MailTypeConstant.MAIL_TYPE_SIMPLE:
                         mailInfoService.sendSimpleMail(mailInfoModel);
                         break;
@@ -71,7 +71,7 @@ public class MailInfoJob implements Job {
                         }
                         mailInfoService.sendTemplateMail(mailInfoModel);
                         break;
-                }
+                }*/
                 // 使用 if else
                 /*if (MailTypeConstant.MAIL_TYPE_SIMPLE == mailInfoDao.getMailType()) {
                     mailInfoService.sendSimpleMail(mailInfoModel);

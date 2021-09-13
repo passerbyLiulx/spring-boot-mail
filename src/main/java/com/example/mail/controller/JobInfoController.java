@@ -110,7 +110,7 @@ public class JobInfoController {
     public ResultModelTest<JobInfoModel> testTwo(@RequestParam("paramOne") String paramOne, @RequestParam("paramTwo") String paramTwo) {
         JobInfoModel jobInfoModel = new JobInfoModel();
         jobInfoModel.setJobId("111");
-        jobInfoModel.setTaskName("testOne");
+        jobInfoModel.setTaskName("testTwo");
         return new ResultModelTest<>(200, "成功", jobInfoModel);
     }
 }
