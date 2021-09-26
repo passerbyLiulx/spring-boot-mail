@@ -91,7 +91,6 @@ public class JobInfoController {
             @ApiImplicitParam(name = "paramOne", value = "参数1", required = true, dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "paramTwo", value = "参数2", required = true, dataType = "String", paramType = "query")
     })
-    @ApiResponse(code = 200, message = "成功", response = ResultModelTest.class)
     @GetMapping("/testOne")
     public ResultModelTest<JobInfoModel> testOne(@RequestParam("paramOne") String paramOne, @RequestParam("paramTwo") String paramTwo) {
         JobInfoModel jobInfoModel = new JobInfoModel();
@@ -109,6 +108,13 @@ public class JobInfoController {
     @GetMapping("/testTwo")
     public ResultModelTest<JobInfoModel> testTwo(@RequestParam("paramOne") String paramOne, @RequestParam("paramTwo") String paramTwo) {
         JobInfoModel jobInfoModel = new JobInfoModel();
+        jobInfoModel.setJobId("111");
+        jobInfoModel.setTaskName("testTwo");
+        return new ResultModelTest<>(200, "成功", jobInfoModel);
+    }
+
+    @PostMapping("/testThree")
+    public ResultModelTest<JobInfoModel> testThree(@RequestBody @ApiParam(name="用户对象",value="传入json格式",required=true) JobInfoModel jobInfoModel) {
         jobInfoModel.setJobId("111");
         jobInfoModel.setTaskName("testTwo");
         return new ResultModelTest<>(200, "成功", jobInfoModel);
